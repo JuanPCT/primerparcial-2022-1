@@ -5,6 +5,33 @@ const contenedorCarrito = document.querySelector('#lista-carrito tbody');
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito'); 
 let articulosCarrito = [];
 
+function mostrarCocteles() {
+     let url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic';
+ 
+     fetch(url)
+         .then(response => response.json())
+         .then(data => mostrarData(data))
+         .catch(error => console.log(error));
+ 
+     const mostrarData = (data) => {
+         console.log(data)
+ 
+         let body = ''
+         for (let i = 0; i < data.drinks.length; i++) {
+             body += `<div class="card mt-5" style="width: 18rem;">
+                                 <img class="card-img-top" src=${data.drinks[i].strDrinkThumb} alt="Card image cap">
+                                 <div class="card-body">
+                                     <h5 class="card-title">${data.drinks[i].strDrink}</h5>
+                                     <p class="card-text">${data.drinks[i].idDrink} 20.000</p>
+                                     <a href="parcial_Index.html" class="btn btn-primary"">COMPRAR</a>
+                                 </div>
+                             </div>`
+         } 
+         document.getElementById('mostrar').innerHTML = body
+     }
+ }
+mostrarCocteles();
+
 // Listeners
 cargarEventListeners();
 
@@ -49,7 +76,6 @@ function leerDatosCurso(curso) {
           cantidad: 1
      }
 
-
      if( articulosCarrito.some( curso => curso.id === infoCurso.id ) ) { 
           const cursos = articulosCarrito.map( curso => {
                if( curso.id === infoCurso.id ) {
@@ -66,9 +92,7 @@ function leerDatosCurso(curso) {
           articulosCarrito = [...articulosCarrito, infoCurso];
      }
 
-     console.log(articulosCarrito)
-
-     
+     console.log(articulosCarrito);     
 
      // console.log(articulosCarrito)
      carritoHTML();
@@ -92,9 +116,7 @@ function eliminarCurso(e) {
 
 // Muestra el curso seleccionado en el Carrito
 function carritoHTML() {
-
      vaciarCarrito();
-
      articulosCarrito.forEach(curso => {
           const row = document.createElement('tr');
           row.innerHTML = `
@@ -115,16 +137,12 @@ function carritoHTML() {
      sincronizarStorage();
 
 }
-
-
 // NUEVO: 
 function sincronizarStorage() {
      localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
 }
-
-// Elimina los cursos del carrito en el DOM
+// Elimina los cocteles del carrito
 function vaciarCarrito() {
-     // forma rapida (recomendada)
      while(contenedorCarrito.firstChild) {
           contenedorCarrito.removeChild(contenedorCarrito.firstChild);
       }
