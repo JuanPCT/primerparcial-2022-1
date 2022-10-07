@@ -97,6 +97,19 @@ ul {
     border:none;
 }
 
+.card-group{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card{
+    margin-top: 15px;
+}
+
+.card img{
+    width: 100%;
+}
 
 .barra {
     padding: 20px 0;
