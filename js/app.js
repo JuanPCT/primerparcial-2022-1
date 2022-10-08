@@ -15,7 +15,6 @@ function mostrarCocteles() {
           .catch(error => console.log(error));
 
      const mostrarData = (data) => {
-          console.log(data)
 
           let body = ''
           for (let i = 0; i < data.drinks.length; i++) {
@@ -25,19 +24,10 @@ function mostrarCocteles() {
                                         <h4>${data.drinks[i].strDrink}</h4>
                                         <p>${data.drinks[i].idDrink}</p>
                                         <p class="precio"><span class="u-pull-right ">$20.000</span></p>
-                                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="1">Agregar</a>
+                                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id=${i}>Agregar</a>
                                    </div>
                               </div> `
           }
-          //     `<div class="card mt-5" style="width: 18rem;">
-          //     <img class="card-img-top" src=${data.drinks[i].strDrinkThumb} alt="Card image cap">
-          //     <div class="card-body">
-          //         <h5 class="card-title">${data.drinks[i].strDrink}</h5>
-          //         <p class="card-text">${data.drinks[i].idDrink} 20.000</p>
-          //         <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="1">Agregar
-          //         Al Carrito</a>
-          //     </div>
-          //        </div>`
           document.getElementById('mostrar').innerHTML = body
      }
 }
@@ -83,9 +73,10 @@ function leerDatosCurso(curso) {
           imagen: curso.querySelector('img').src,
           titulo: curso.querySelector('h4').textContent,
           precio: curso.querySelector('.precio span').textContent,
-          id: curso.querySelector('a').getAttribute('data-id'),
+          id: curso.querySelector('p').textContent,
           cantidad: 1
      }
+     console.log(infoCurso);
 
      if (articulosCarrito.some(curso => curso.id === infoCurso.id)) {
           const cursos = articulosCarrito.map(curso => {
